@@ -49,7 +49,10 @@ class SQLiteSpanExporter(SpanExporter):
 
 # 1) OTel setup FIRST
 provider = TracerProvider()
-provider.add_span_processor(SimpleSpanProcessor(ConsoleSpanExporter()))
+# provider.add_span_processor(SimpleSpanProcessor(ConsoleSpanExporter()))
+provider.add_span_processor(
+    SimpleSpanProcessor(SQLiteSpanExporter("traces.db"))
+)
 trace.set_tracer_provider(provider)
 tracer = trace.get_tracer("llm-zoomcamp")
 
